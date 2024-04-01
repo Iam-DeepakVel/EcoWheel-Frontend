@@ -102,7 +102,7 @@ export default function UploadDocuments({
       <form
         onSubmit={handleSubmit}
         encType="multipart/form-data"
-        className="p-8 rounded-lg shadow-lg bg-white"
+        className="p-8 rounded-lg bg-white shadow-lg shadow-blue-300"
       >
         <div>
           {/* RC */}

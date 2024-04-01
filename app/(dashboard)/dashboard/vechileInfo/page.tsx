@@ -80,7 +80,7 @@ export default function VehicleInformation() {
   return (
     <div>
       {!showUploadDocumentsUI && documents && (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-4 lg:px-6">
           {/* Top Section */}
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">

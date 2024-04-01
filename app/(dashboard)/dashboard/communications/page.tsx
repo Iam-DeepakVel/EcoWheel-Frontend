@@ -88,7 +88,7 @@ export default function CommunicationsPage() {
   return (
     <>
       {communications && (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-4 lg:px-6">
           {/* Top Section */}
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">

@@ -14,7 +14,7 @@ const actions = [
     iconForeground: "text-teal-500",
     hover: "bg-teal-100",
     iconBackground: "bg-teal-50",
-    desc: "Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendus qui ut at blanditiis et quo et molestiae",
+    desc: "This is the front image of registration certificate.",
     key: "rcbookfrontImageURL",
   },
   {
@@ -23,7 +23,7 @@ const actions = [
     iconForeground: "text-purple-500",
     hover: "bg-purple-100",
     iconBackground: "bg-purple-50",
-    desc: "Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendus qui ut at blanditiis et quo et molestiae",
+    desc: "This is the back image of registration certificate.",
     key: "rcbookbackImageURL",
   },
   {
@@ -32,7 +32,7 @@ const actions = [
     iconForeground: "text-sky-500",
     hover: "bg-sky-100",
     iconBackground: "bg-sky-50",
-    desc: "Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendus qui ut at blanditiis et quo et molestiae",
+    desc: "This is the front image of license.",
     key: "licencefrontImageURL",
   },
   {
@@ -41,7 +41,7 @@ const actions = [
     iconForeground: "text-yellow-500",
     hover: "bg-yellow-100",
     iconBackground: "bg-yellow-50",
-    desc: "Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendus qui ut at blanditiis et quo et molestiae",
+    desc: "This is the back image of license.",
     key: "licencebackImageURL",
   },
   {
@@ -50,7 +50,7 @@ const actions = [
     iconForeground: "text-rose-500",
     hover: "bg-rose-100",
     iconBackground: "bg-rose-50",
-    desc: "Doloribus dolores nostrum quia qui natus officia quod et dolorem. Sit repellendus qui ut at blanditiis et quo et molestiae",
+    desc: "This is the image of Insurance.",
     key: "insurancefrontImageURL",
   },
 ];
@@ -86,9 +86,18 @@ export default function DocumentsPage() {
   }, []);
 
   return (
-    <div>
+    <div className="px-4 lg:px-6">
+      <div className="sm:flex-auto mb-4">
+        <h1 className="text-base font-semibold leading-6 text-gray-900">
+          Documents
+        </h1>
+        <p className="mt-2 text-sm text-gray-700">
+          You can view all your documents and verify anytime you want. All your
+          documents are securly stored in our database.{" "}
+        </p>
+      </div>
       {!imageUrl && (
-        <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
+        <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg shadow-blue-300 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
           {actions.map((action, actionIdx) => (
             <div
               key={action.title}

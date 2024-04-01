@@ -3,7 +3,7 @@ import AnalyticsCharts from "@/components/analytics-charts";
 
 export default function AnalyticsPage() {
   return (
-    <>
+    <div className="px-4 lg:px-6">
       <div className="sm:flex-auto">
         <h1 className="text-base font-semibold leading-6 text-gray-900">
           Analytics
@@ -15,6 +15,6 @@ export default function AnalyticsPage() {
       </div>
 
       <AnalyticsCharts />
-    </>
+    </div>
   );
 }
