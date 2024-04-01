@@ -5,19 +5,36 @@ import {
   Bars3Icon,
   BellIcon,
   ChartPieIcon,
-  Cog6ToothIcon,
   PhotoIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useUserContext } from "@/context/UserContext";
-import { LogOut, TruckIcon, UploadCloudIcon } from "lucide-react";
+import {
+  BadgePlus,
+  LogOut,
+  Mail,
+  TruckIcon,
+  UploadCloudIcon,
+  User,
+} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import axios, { AxiosResponse } from "axios";
 import config from "@/config";
 import Loader from "@/components/loader";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { formatCreatedAtDate } from "@/lib/utils";
 
 interface DocumentData {
   images: string[];
@@ -233,7 +250,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                             }}
                             className="group w-full -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                           >
-                            <Cog6ToothIcon
+                            <LogOut
                               className="h-6 w-6 shrink-0"
                               aria-hidden="true"
                             />
@@ -296,13 +313,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     ))}
                   </ul>
                 </li>
-                <li className="mt-auto ">
+                <li className="mt-auto">
                   <button
                     onClick={() => {
                       logout();
                       router.push("/login");
                     }}
-                    className="group w-full gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                    className="group w-full -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                   >
                     <LogOut className="h-6 w-6 shrink-0" aria-hidden="true" />
                     Log out
@@ -367,10 +384,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     </span>
                     <span className="hidden lg:flex lg:items-center">
                       <span
-                        className="ml-4 text-sm font-semibold leading-6 text-gray-900"
+                        className="ml-4 text-sm font-semibold leading-6 text-gray-900 capitalize"
                         aria-hidden="true"
                       >
-                        {userInfo.name}
+                        Welcome, {userInfo.name}
                       </span>
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
@@ -388,21 +405,72 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                      {userNavigation.map((item) => (
-                        <Menu.Item key={item.name}>
-                          {({ active }) => (
-                            <a
-                              href={item.href}
+                      <Menu.Item>
+                        <AlertDialog>
+                          <AlertDialogTrigger>
+                            <div
                               className={classNames(
-                                active ? "bg-gray-50" : "",
-                                "block px-3 py-1 text-sm leading-6 text-gray-900"
+                                "flex px-3 py-1 text-sm w-32 leading-6 text-gray-900 hover:bg-blue-100 cursor-pointer"
                               )}
                             >
-                              {item.name}
-                            </a>
+                              View Profile
+                            </div>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle className="text-xl font-semibold mb-2">
+                                Your Profile
+                              </AlertDialogTitle>
+                              <AlertDialogDescription className="space-y-4">
+                                <div className="flex items-center gap-2">
+                                  <div className="flex items-center gap-1">
+                                    <User className="w-6 h-auto text-black" />
+                                    <h2 className="font-semibold">Name:</h2>
+                                  </div>
+                                  <p className="capitalize">{userInfo.name}</p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="flex items-center gap-1">
+                                    <Mail className="w-6 h-auto text-black" />
+                                    <h2 className="font-semibold">Email:</h2>
+                                  </div>
+                                  <p>{userInfo.email}</p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="flex items-center gap-1">
+                                    <BadgePlus className="w-6 h-auto text-black" />
+                                    <h2 className="font-semibold">
+                                      Joined on:
+                                    </h2>
+                                  </div>
+                                  <p>
+                                    {formatCreatedAtDate(userInfo.createdAt)}
+                                  </p>
+                                </div>
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="btn-normal hover:text-white hover:bg-neutral-700">
+                                Back
+                              </AlertDialogCancel>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </Menu.Item>
+
+                      <Menu.Item>
+                        <div
+                          onClick={() => {
+                            logout();
+                            router.push("/login");
+                          }}
+                          className={classNames(
+                            "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-blue-100 cursor-pointer"
                           )}
-                        </Menu.Item>
-                      ))}
+                        >
+                          log out
+                        </div>
+                      </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>

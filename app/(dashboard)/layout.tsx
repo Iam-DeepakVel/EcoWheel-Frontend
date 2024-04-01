@@ -5,7 +5,6 @@ import {
   Bars3Icon,
   BellIcon,
   ChartPieIcon,
-  Cog6ToothIcon,
   PhotoIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -206,7 +205,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                             }}
                             className="group w-full -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                           >
-                            <Cog6ToothIcon
+                            <LogOut
                               className="h-6 w-6 shrink-0"
                               aria-hidden="true"
                             />
