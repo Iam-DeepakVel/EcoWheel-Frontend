@@ -6,6 +6,7 @@ import config from "@/config";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/context/UserContext";
+import toast from "react-hot-toast";
 
 interface LoginForm {
   email: string;
@@ -31,6 +32,8 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const signinToast = toast.loading("Signing in...");
+
     try {
       const { data } = await axios.post(`${config.apiUrl}/login`, formData);
 
@@ -50,12 +53,18 @@ export default function LoginPage() {
 
           // Update user details in global context
           setUserInfo(response.data);
+          toast.success("Successfully Signed in", {
+            id: signinToast,
+          });
           router.push("/upload");
         }
       }
 
       console.log(data);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response.data.message, {
+        id: signinToast,
+      });
       console.error("Login failed:", error);
     }
   };

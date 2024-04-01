@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import config from "@/config";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import { FileSearch } from "lucide-react";
+import toast from "react-hot-toast";
 
 const actions = [
   {
@@ -74,7 +75,8 @@ export default function DocumentsPage() {
         },
       });
       setDocumentsImages(data.images[0]);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.error("Error fetching documents:", error);
     }
   };

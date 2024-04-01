@@ -6,6 +6,7 @@ import config from "@/config";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/context/UserContext";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -29,29 +30,36 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const signupToast = toast.loading("Signing up...");
     try {
       setLoading(true);
-      const { data } = await axios.post(`${config.apiUrl}/register`, formData);
+      const res = await axios.post(`${config.apiUrl}/register`, formData);
 
-      if (data.token) {
-        Cookies.set("token", data.token);
+      if (res.data.token) {
+        Cookies.set("token", res.data.token);
 
         const response = await axios.get(`${config.apiUrl}/profile`, {
           headers: {
-            token: data.token,
+            token: res.data.token,
           },
         });
 
-        if (data) {
+        if (response) {
           // set user details in cookie
           Cookies.set("user-details", JSON.stringify(response.data));
 
           // Update user details in global context
           setUserInfo(response.data);
+          toast.success("Successfully Signed up", {
+            id: signupToast,
+          });
           router.push("/upload");
         }
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response.data.message, {
+        id: signupToast,
+      });
       console.error("Registration failed:", error);
     } finally {
       setLoading(false);

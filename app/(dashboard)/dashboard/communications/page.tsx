@@ -28,13 +28,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import toast from "react-hot-toast";
 
 export default function CommunicationsPage() {
   const [communications, setCommunications] = useState<any>();
   const [newEmail, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { userInfo, setUserInfo } = useUserContext();
+  const { userInfo, updateProfile } = useUserContext();
 
   const fetchCommunications = async () => {
     const token = Cookies.get("token");
@@ -46,17 +47,18 @@ export default function CommunicationsPage() {
         },
       });
       setCommunications(response.data);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.error("Error fetching communications:", error);
     }
   };
 
   const updateEmail = async () => {
     const token = Cookies.get("token");
-
+    const updateEmailToast = toast.loading("Updating Email...");
     try {
       const response = await axios.patch(
-        `${config.apiUrl}/update-mail`,
+        `${config.apiUrl}/update-profile`,
         { email: newEmail, password },
         {
           headers: {
@@ -64,8 +66,17 @@ export default function CommunicationsPage() {
           },
         }
       );
-      console.log(response);
-    } catch (error) {
+      if (response.status === 200) {
+        console.log(response);
+        updateProfile(response.data.email);
+      }
+      toast.success(`Email updated as ${response.data.email}`, {
+        id: updateEmailToast,
+      });
+    } catch (error: any) {
+      toast.error(error.response.data.message, {
+        id: updateEmailToast,
+      });
       console.error("Error updating email:", error);
     }
   };

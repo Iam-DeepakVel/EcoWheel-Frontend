@@ -5,6 +5,7 @@ import Loader from "@/components/loader";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useUserContext } from "@/context/UserContext";
+import config from "@/config";
 
 export default function HomePage() {
   const router = useRouter();
@@ -15,13 +16,12 @@ export default function HomePage() {
   async function fetchProfileAndSetInLocalStorage() {
     try {
       setLoading(true);
-      const apiUrl = process.env.NEXT_PUBLIC_ECOWHEEL_API;
       const token = Cookies.get("token");
 
       if (!token) {
         router.push("/register");
       } else {
-        const { data } = await axios.get(`${apiUrl}/profile`, {
+        const { data } = await axios.get(`${config.apiUrl}/profile`, {
           headers: {
             token: token,
           },

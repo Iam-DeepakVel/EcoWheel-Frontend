@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import config from "@/config";
 import UploadDocuments from "@/components/upload";
 import { formatDate } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 const ExpiryStacks = [
   {
@@ -55,7 +56,8 @@ export default function VehicleInformation() {
       );
       setDocuments(data[0]);
       console.log(data);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.error("Error fetching documents:", error);
     }
   };

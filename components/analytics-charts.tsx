@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
+import toast from "react-hot-toast";
 
 const stats = [
   {
@@ -132,7 +133,8 @@ const AnalyticsCharts: React.FC = () => {
           },
         ],
       });
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.error("Error fetching all feeds:", error);
     }
   };
@@ -142,7 +144,8 @@ const AnalyticsCharts: React.FC = () => {
       const url = "https://api.thingspeak.com/channels/2409021/feeds/last.json";
       const { data } = await axios.get(url);
       setCoValue(data.field1);
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.error("Error fetching last feed:", error);
     }
   }
