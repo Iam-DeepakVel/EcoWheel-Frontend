@@ -61,8 +61,3 @@ export function formatSuggestionPoints(text: string) {
   const points = text.split(". ");
   return points;
 }
-
-const text =
-  "Regularly service and maintain the engine to ensure optimal combustion efficiency. Check and replace the air filter if dirty or clogged to allow for proper air intake. Inspect and replace faulty oxygen sensors to improve fuel mixture and reduce CO emissions. Ensure the catalytic converter is functioning correctly to reduce harmful emissions.";
-const helo = formatSuggestionPoints(text);
-console.log(helo);

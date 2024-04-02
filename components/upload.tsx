@@ -6,6 +6,7 @@ import config from "@/config";
 import { useRouter } from "next/navigation";
 import { RefreshCwIcon, UploadCloudIcon } from "lucide-react";
 import { ArrowUturnLeftIcon } from "@heroicons/react/16/solid";
+import toast from "react-hot-toast";
 
 export default function UploadDocuments({
   reset,
@@ -50,12 +51,14 @@ export default function UploadDocuments({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
 
     if (isError()) {
-      window.alert("Please upload all documents");
+      toast.error("Please upload all required documents.");
       return;
     }
+
+    setIsLoading(true);
+    const uploadDocumentToast = toast.loading("Uploading 🚀...Please wait!");
 
     try {
       const token = Cookies.get("token");
@@ -76,12 +79,15 @@ export default function UploadDocuments({
           },
         }
       );
-      console.log(data);
 
       if (data.success) {
+        toast.success("Successfully uploaded!", {
+          id: uploadDocumentToast,
+        });
         router.push("/dashboard/analytics");
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error("Upload failed! Please retry again.");
       console.error(error);
     } finally {
       setIsLoading(false);

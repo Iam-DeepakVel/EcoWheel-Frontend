@@ -4,14 +4,9 @@ import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
 import toast from "react-hot-toast";
 
-const stats = [
-  {
-    name: "Realtime CO Value",
-    value: "$405,091.00",
-    change: "+4.75%",
-    changeType: "positive",
-  },
-];
+const stat = {
+  name: "Realtime CO Value",
+};
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -55,9 +50,6 @@ const AnalyticsCharts: React.FC = () => {
     try {
       const response = await axios.get(url);
       const data = response.data.feeds;
-
-      console.log(data);
-
       const groupedData = data.reduce((acc: any, feed: any) => {
         const date = new Date(feed.created_at).toLocaleDateString();
         if (!acc[date]) {
@@ -102,7 +94,6 @@ const AnalyticsCharts: React.FC = () => {
 
       const timestamps = averages.map((entry) => entry.date);
       const averageCOValues = averages.map((entry) => entry.averageCO);
-      const coValues = data.map((feed: any) => Number(feed.field1));
 
       const timestampsLine = hourlyAverages.map((entry) => entry.date);
       const averageCOLine = hourlyAverages.map((entry) => entry.averageCO);
@@ -159,36 +150,23 @@ const AnalyticsCharts: React.FC = () => {
       <div className="container mx-auto px-2 py-4">
         <div className="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
           <dl className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
-            {stats.map((stat) => (
-              <div
-                key={stat.name}
-                className={classNames(
-                  "flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8"
-                )}
-              >
-                <dt className="text-sm font-medium leading-6 text-gray-500">
-                  {stat.name}
-                </dt>
-                <dd
-                  className={classNames(
-                    stat.changeType === "negative"
-                      ? "text-rose-600"
-                      : "text-gray-700",
-                    "text-xs font-medium"
-                  )}
-                >
-                  {stat.change}
-                </dd>
-                <dd className="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
-                  {coValue}
-                </dd>
-              </div>
-            ))}
+            <div
+              className={classNames(
+                "flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8"
+              )}
+            >
+              <dt className="text-sm font-medium leading-6 text-gray-500">
+                {stat.name}
+              </dt>
+              <dd className="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
+                {coValue}
+              </dd>
+            </div>
           </dl>
         </div>
 
         {/* Graphs */}
-        <div className="grid grid-cols-2 gap-8 max-w-7xl mx-auto mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto mt-8">
           <div>
             <h2 className="font-semibold text-center mb-2">Line Graph</h2>
             <div

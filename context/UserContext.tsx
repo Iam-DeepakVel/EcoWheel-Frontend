@@ -23,14 +23,11 @@ function UserInfoProvider({ children }: { children: ReactNode }) {
   }
 
   function updateProfile(email: string) {
-    console.log(email);
     const updatedUserDetails = { ...userDetails, email };
-    console.log(updatedUserDetails);
     Cookies.set("user-details", JSON.stringify(updatedUserDetails));
     setUserInfo(updatedUserDetails);
   }
 
-  console.log(userDetails);
   return (
     <UserContext.Provider
       value={{ userInfo, setUserInfo, logout, updateProfile }}

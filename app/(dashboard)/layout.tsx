@@ -24,10 +24,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { formatCreatedAtDate } from "@/lib/utils";
-import toast from "react-hot-toast";
-import Cookies from "js-cookie";
-import axios from "axios";
-import config from "@/config";
 
 const navigation = [
   {
@@ -46,8 +42,8 @@ const navigation = [
     icon: PhotoIcon,
   },
   {
-    name: "Vechicle Information",
-    href: "/dashboard/vechileInfo",
+    name: "Vehicle Information",
+    href: "/dashboard/vehicleInfo",
     icon: TruckIcon,
   },
 ];
@@ -59,42 +55,11 @@ function classNames(...classes: any) {
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [newEmail, setNewEmail] = useState("");
-  const [newName, setNewName] = useState("");
-  const [password, setPassword] = useState("");
 
   const { userInfo, logout } = useUserContext();
 
   const router = useRouter();
   const pathname = usePathname();
-
-  const updateUserProfileInDB = async () => {
-    const token = Cookies.get("token");
-    const updateProfileToast = toast.loading("Updating Email...");
-    try {
-      const response = await axios.patch(
-        `${config.apiUrl}/update-profile`,
-        { email: newEmail, name: newName, password },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (response.status === 200) {
-        console.log(response);
-        // updateProfile(response.data.email);
-      }
-      toast.success("Profile Updated", {
-        id: updateProfileToast,
-      });
-    } catch (error: any) {
-      toast.error(error.response.data.message, {
-        id: updateProfileToast,
-      });
-      console.error("Error updating email:", error);
-    }
-  };
 
   useEffect(() => {
     if (!userInfo) {
@@ -179,6 +144,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                               <li key={item.name}>
                                 <Link
                                   href={item.href}
+                                  onClick={() => setSidebarOpen(!sidebarOpen)}
                                   className={classNames(
                                     item.href === pathname
                                       ? "bg-gray-800 text-white"

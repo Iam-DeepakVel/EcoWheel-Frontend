@@ -67,7 +67,6 @@ export default function CommunicationsPage() {
         }
       );
       if (response.status === 200) {
-        console.log(response);
         updateProfile(response.data.email);
       }
       toast.success(`Email updated as ${response.data.email}`, {

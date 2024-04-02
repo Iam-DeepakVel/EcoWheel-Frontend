@@ -59,8 +59,6 @@ export default function LoginPage() {
           router.push("/upload");
         }
       }
-
-      console.log(data);
     } catch (error: any) {
       toast.error(error.response.data.message, {
         id: signinToast,

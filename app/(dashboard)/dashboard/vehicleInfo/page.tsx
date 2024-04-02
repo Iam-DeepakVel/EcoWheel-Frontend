@@ -55,7 +55,6 @@ export default function VehicleInformation() {
         }
       );
       setDocuments(data[0]);
-      console.log(data);
     } catch (error: any) {
       toast.error(error.message);
       console.error("Error fetching documents:", error);
@@ -65,8 +64,6 @@ export default function VehicleInformation() {
   useEffect(() => {
     fetchDocumentsInfo();
   }, []);
-
-  console.log(documents);
 
   function getExpiryDate(key: string): string {
     const ExpiryDateMap: any = {
@@ -85,7 +82,7 @@ export default function VehicleInformation() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                Vechile Information
+                Vehicle Information
               </h1>
               <p className="mt-2 text-sm text-gray-700">
                 This table presents a streamlined overview of the extracted

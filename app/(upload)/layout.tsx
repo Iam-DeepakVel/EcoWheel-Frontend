@@ -65,8 +65,8 @@ const navigation = [
     disabled: true,
   },
   {
-    name: "Vechicle Information",
-    href: "/dashboard/vechileInfo",
+    name: "Vehicle Information",
+    href: "/dashboard/vehicleInfo",
     icon: TruckIcon,
     disabled: true,
   },
