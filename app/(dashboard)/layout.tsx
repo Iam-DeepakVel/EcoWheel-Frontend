@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useUserContext } from "@/context/UserContext";
-import { BadgePlus, LogOut, Mail, TruckIcon, User } from "lucide-react";
+import { BadgePlus, HeartPulse, LogOut, Mail, TruckIcon, User } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -46,6 +46,11 @@ const navigation = [
     href: "/dashboard/vehicleInfo",
     icon: TruckIcon,
   },
+  {
+    name: "Check Condition",
+    href: "/dashboard/checkCondition",
+    icon: HeartPulse
+  }
 ];
 
 function classNames(...classes: any) {
